@@ -36,7 +36,11 @@ def main(src, out):
     for start, end, label, colour, ls, lw in COHORTS:
         g = d[(d["closed"] >= pd.Timestamp(start, tz="UTC")) & (d["closed"] < pd.Timestamp(end, tz="UTC"))]
         cum = 100 * km_cumulative(g["t"].values, g["event"].values if "event" in g else g["responded"].values, weeks * 7)
-        ax.step(weeks, cum, where="post", color=colour, ls=ls, lw=lw)
+        if start == "2024-07-05":
+            ax.step(weeks[:83], cum[:83], where="post", color=colour, ls=ls, lw=lw)
+            ax.step(weeks[82:], cum[82:], where="post", color=colour, ls=(0, (1.5, 2)), lw=2.0)
+        else:
+            ax.step(weeks, cum, where="post", color=colour, ls=ls, lw=lw)
         last = np.nanmax(np.where(~np.isnan(cum))[0])
         ends.append((cum[last], f"{label} ({len(g)})", colour, ls, lw))
     # The curves overlap, so a compact key in the empty lower-right corner beats end labels.
@@ -60,9 +64,9 @@ def main(src, out):
     title_block(
         fig,
         "Four in five recent consultations miss the 12-week target",
-        "Share of consultations by ministerial departments and HMRC with a response published on the\n"
-        "consultation page, by weeks since closing (Kaplan-Meier estimate; recent consultations still open)",
-        "Source: GOV.UK search and content APIs, 24 November 2026. Response date is the first substantive\n"
+        "Share of ministerial department and HMRC consultations with a recorded response on the\n"
+        "consultation page, by weeks since closing (dotted tail: fewer than 20 remaining under observation)",
+        "Source: GOV.UK search and content APIs, 24 November 2026. Recorded response date is the first substantive\n"
         f"change-history entry after closing (excluding holding notices). {len(d):,} consultations closed Jan 2019–Nov 2026.",
     )
     save(fig, out)

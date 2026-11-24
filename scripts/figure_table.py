@@ -24,6 +24,8 @@ DISPLAY_NAMES = {
 
 def main(src, out):
     raw = pd.read_csv(src)
+    if "answered_later" not in raw.columns:
+        raw["answered_later"] = raw["closed"] - raw["within_12w"] - raw["no_response"]
     d = raw[raw["closed"] >= 10].copy()
     d["exact_pct"] = 100 * d["within_12w"] / d["closed"]
     d["exact_no_resp"] = 100 * d["no_response"] / d["closed"]
@@ -35,50 +37,71 @@ def main(src, out):
     small = raw[raw["closed"] < 10].sort_values("dept")
     small_note = ", ".join(f"{r['dept']} {int(r['within_12w'])}/{int(r['closed'])}" for _, r in small.iterrows())
 
-    fig, ax = figure(aspect=0.88)
+    fig, ax = figure(aspect=0.93)
     ax.set_axis_off()
     ax.set_position([0, 0, 1, 1])
 
-    top = 0.745
-    step = 0.0435
-    bar_x0, bar_w_max = 0.30, 0.22  # 0..50% track ends at 0.52; text sits cleanly at 0.535
-    max_scale = 50.0
+    top = 0.715
+    step = 0.0408
+    bar_x0, bar_w = 0.270, 0.275
+    gap = 0.0022
+
+    # Inline 3-swatch key above column headers
+    key_y = 0.818
+    sw_w, sw_h = 0.020, 0.014
+    swatches = [
+        (0.270, PAL["accent"], "none", 0.0, "Answered within 12w"),
+        (0.515, PAL["context"], "none", 0.0, "Answered later"),
+        (0.705, PAL["faint"], PAL["context"], 0.6, "No recorded response"),
+    ]
+    for sx, fc, ec, lw, label in swatches:
+        fig.add_artist(Rectangle((sx, key_y - sw_h / 2), sw_w, sw_h, facecolor=fc, edgecolor=ec, lw=lw, zorder=2))
+        fig.text(sx + sw_w + 0.008, key_y, label, fontsize=BASE_PT * 0.84, va="center", color=PAL["ink"])
 
     # Column headers
-    fig.text(0.035, top + 0.030, "Department", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold")
-    fig.text(0.270, top + 0.030, "Closed\n(>12w)", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
-    fig.text(bar_x0, top + 0.030, "Responded within 12 weeks", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold")
-    fig.text(0.815, top + 0.030, "No response\nyet", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
-    fig.text(0.965, top + 0.030, "Median\ndays*", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
-    fig.add_artist(Line2D([0.035, 0.965], [top + 0.021] * 2, color=PAL["ink"], lw=0.6))
+    fig.text(0.035, top + 0.028, "Department", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold")
+    fig.text(0.248, top + 0.028, "Closed\n(>12w)", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
+    fig.text(bar_x0, top + 0.028, "Outcome breakdown (0\u2013100%)", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold")
+    fig.text(0.665, top + 0.028, "Within\n12 weeks", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
+    fig.text(0.825, top + 0.028, "No recorded\nresponse", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
+    fig.text(0.965, top + 0.028, "Median\ndays*", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
+    fig.add_artist(Line2D([0.035, 0.965], [top + 0.020] * 2, color=PAL["ink"], lw=0.6))
 
-    # Vertical dashed reference line behind the bars only (never crossing text labels)
-    avg_x = bar_x0 + (overall_pct / max_scale) * bar_w_max
+    # Vertical dashed 20% average reference line across the stacked bars
+    avg_x = bar_x0 + (overall_pct / 100.0) * bar_w
     y_bot = top - (len(d) - 0.5) * step
-    fig.add_artist(Line2D([avg_x, avg_x], [y_bot, top + 0.021], color=PAL["ink"], lw=0.6, ls=(0, (2, 2)), zorder=1))
-    fig.text(avg_x, y_bot - 0.011, f"Avg: {overall_pct}%", fontsize=BASE_PT * 0.78, color=PAL["muted"], ha="center", va="top")
+    fig.add_artist(Line2D([avg_x, avg_x], [y_bot, top + 0.020], color=PAL["ink"], lw=0.7, ls=(0, (2, 2)), zorder=4))
+    fig.text(avg_x, y_bot - 0.011, f"Avg within 12w: {overall_pct}%", fontsize=BASE_PT * 0.78, color=PAL["muted"], ha="center", va="top")
 
-    bar_h = step * 0.52
+    bar_h = step * 0.54
     for i, r in d.iterrows():
         y = top - i * step
         name = DISPLAY_NAMES.get(r["dept"], r["dept"])
         closed = int(r["closed"])
         w12 = int(r["within_12w"])
+        later = int(r["answered_later"])
         nr = int(r["no_response"])
         pct_w12 = round(r["exact_pct"])
         pct_nr = round(r["exact_no_resp"])
         med = f"{r['median_days']:.1f}".rstrip("0").rstrip(".")
 
         fig.text(0.035, y, name, fontsize=BASE_PT * 0.89, va="center", color=PAL["ink"])
-        fig.text(0.270, y, f"{closed}", fontsize=BASE_PT * 0.89, va="center", ha="right", color=PAL["muted"])
+        fig.text(0.248, y, f"{closed}", fontsize=BASE_PT * 0.89, va="center", ha="right", color=PAL["muted"])
 
-        fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bar_w_max, bar_h, facecolor=PAL["faint"], edgecolor="none", zorder=0))
-        bw = (min(r["exact_pct"], max_scale) / max_scale) * bar_w_max
-        if bw > 0:
-            fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bw, bar_h, facecolor=PAL["accent"], edgecolor="none", zorder=2))
-        fig.text(bar_x0 + bar_w_max + 0.015, y, f"{pct_w12}% ({w12})", fontsize=BASE_PT * 0.87, va="center", color=PAL["ink"])
+        fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bar_w, bar_h, facecolor=PAL["faint"], edgecolor="none", zorder=0))
+        bw1 = (w12 / closed) * bar_w
+        bw2 = (later / closed) * bar_w
+        if bw1 > 0:
+            fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bw1, bar_h, facecolor=PAL["accent"], edgecolor="none", zorder=2))
+        if bw2 > 0:
+            fig.add_artist(Rectangle((bar_x0 + bw1, y - bar_h / 2), bw2, bar_h, facecolor=PAL["context"], edgecolor="none", zorder=2))
+        if w12 > 0 and later > 0:
+            fig.add_artist(Rectangle((bar_x0 + bw1 - gap / 2, y - bar_h / 2), gap, bar_h, facecolor=PAL["paper"], edgecolor="none", zorder=3))
+        if (w12 + later) > 0 and nr > 0:
+            fig.add_artist(Rectangle((bar_x0 + bw1 + bw2 - gap / 2, y - bar_h / 2), gap, bar_h, facecolor=PAL["paper"], edgecolor="none", zorder=3))
 
-        fig.text(0.815, y, f"{nr} ({pct_nr}%)", fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["muted"])
+        fig.text(0.665, y, f"{pct_w12}% ({w12})", fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["ink"])
+        fig.text(0.825, y, f"{nr} ({pct_nr}%)", fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["muted"])
         fig.text(0.965, y, med, fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["muted"])
         fig.add_artist(Line2D([0.035, 0.965], [y - step / 2] * 2, color=PAL["faint"], lw=0.5))
 

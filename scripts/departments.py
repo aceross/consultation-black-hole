@@ -55,13 +55,16 @@ def km_cumulative(days, event, grid):
 
 
 def main(src, outdir):
-    d = pd.read_csv(src, parse_dates=["closed", "response_date", "opened"])
+    d = pd.read_csv(src, parse_dates=["closed", "response_date", "opened", "delay_note_date"])
     d = d[d["doc_type"] != "redirect"].copy()
     d["dept"] = d["lead_org"].map(DEPARTMENTS)
     dep = d[d["dept"].notna()].copy()
     elapsed = (SNAPSHOT - dep["closed"]).dt.days
     dep["t"] = np.where(dep["responded"], dep["days_to_response"].clip(lower=0), elapsed)
     dep["event"] = dep["responded"]
+    delay_days = (dep["delay_note_date"] - dep["closed"]).dt.days
+    dep["explained_12w"] = (~dep["within_12w"]) & delay_days.notna() & (delay_days <= 84)
+    dep["neither_12w"] = (~dep["within_12w"]) & (~dep["explained_12w"])
     print("Department consultations closed since 2019:", len(dep))
 
     grid = np.arange(0, 731)
@@ -99,22 +102,36 @@ def main(src, outdir):
     pd.DataFrame(summary_3).to_csv(Path(outdir) / "km_summary_3cohorts.csv", index=False)
 
     since = dep[dep["closed"] >= ELECTION]
-    elig = since[(SNAPSHOT - since["closed"]).dt.days > 84]
+    elig = since[(SNAPSHOT - since["closed"]).dt.days > 84].copy()
+    elig["answered_later"] = elig["responded"] & (~elig["within_12w"])
     print(f"\nDepartments, closed since election and more than 12 weeks ago: {len(elig)}; "
           f"response within 12 weeks: {elig['within_12w'].sum()} ({100 * elig['within_12w'].mean():.0f}%); "
+          f"answered later: {elig['answered_later'].sum()} ({100 * elig['answered_later'].mean():.0f}%); "
           f"no response yet: {elig['overdue'].sum()} ({100 * elig['overdue'].mean():.0f}%)")
     pre = elig[elig["opened"] < ELECTION]
     print(f"Of those, opened before the election: {len(pre)}; no response yet: {pre['overdue'].sum()}")
     if "has_delay_note" in elig.columns:
         print(f"Of those, had a post-closing holding/delay note: {int(elig['has_delay_note'].sum())}; "
               f"still unanswered: {int((elig['has_delay_note'] & ~elig['responded']).sum())}")
+    expl_depts = elig.loc[elig["explained_12w"], "dept"].value_counts().to_dict()
+    print(f"Principle 10 (<=84d) post-election (N={len(elig)}): "
+          f"answered={int(elig['within_12w'].sum())} ({100 * elig['within_12w'].mean():.0f}%), "
+          f"explained_only={int(elig['explained_12w'].sum())} ({100 * elig['explained_12w'].mean():.0f}%, {expl_depts}), "
+          f"neither={int(elig['neither_12w'].sum())} ({100 * elig['neither_12w'].mean():.0f}%)")
+    for start, end, label in COHORTS_3:
+        g = dep[(dep["closed"] >= pd.Timestamp(start, tz="UTC")) & (dep["closed"] < pd.Timestamp(end, tz="UTC")) & ((SNAPSHOT - dep["closed"]).dt.days > 84)]
+        print(f"  Principle 10 {label} (N={len(g)}): answered={int(g['within_12w'].sum())} ({100 * g['within_12w'].mean():.0f}%), "
+              f"explained_only={int(g['explained_12w'].sum())} ({100 * g['explained_12w'].mean():.0f}%), "
+              f"neither={int(g['neither_12w'].sum())} ({100 * g['neither_12w'].mean():.0f}%)")
 
     t = elig.groupby("dept").agg(
         closed=("link", "size"),
         within_12w=("within_12w", "sum"),
+        answered_later=("answered_later", "sum"),
         no_response=("overdue", "sum"),
         median_days=("days_to_response", "median"),
         delay_notes=("has_delay_note", "sum") if "has_delay_note" in elig.columns else ("link", lambda s: 0),
+        explained_12w=("explained_12w", "sum"),
     )
     t["pct_within_12w"] = (100 * t["within_12w"] / t["closed"]).round(0)
     t["pct_no_response"] = (100 * t["no_response"] / t["closed"]).round(0)

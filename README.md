@@ -3,7 +3,7 @@
 Companion code and data for *"We are analysing your feedback"* ([Of Particular Interest](https://ceross.substack.com)): how long GOV.UK consultations take to get a published response, 2019 to November 2026.
 
 - Draft: `draft_20261031.md` · Figures: `figures/fig1_response_curves.png`, `figures/fig2_departments.png`
-- Data: `data/consultations_since_2019.csv` (3,344 rows: 3,343 closed/outcome consultations and 1 redirect; 2,657 with datable responses, 687 unanswered), `data/departments_since_election.csv`, `data/km_curves.csv`, `data/km_summary_3cohorts.csv`; console output in `data/analysis_output.txt`, `data/departments_output.txt`
+- Data: `data/consultations_since_2019.csv` (3,344 rows: 3,343 closed/outcome consultations and 1 redirect, with 2,657 datable responses and 687 unanswered), `data/departments_since_election.csv` (including `answered_later` and `explained_12w` Principle 10 counts), `data/km_curves.csv`, `data/km_summary_3cohorts.csv`, and console output (including the Principle 10 84-day breakdown) in `data/analysis_output.txt` and `data/departments_output.txt`
 - Raw snapshot (24 November 2026): `data/raw/consultations.json` (GOV.UK search API listing, 7,550 items), `data/raw/content.jsonl` (GOV.UK content API extracts, 3,344 items)
 - Closure log: `CLOSURE_LOG.md`
 
