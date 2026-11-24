@@ -1,0 +1,90 @@
+Consultations closed 1 Jan 2019 to 23 Nov 2026: 3344
+doc_type
+consultation_outcome    2720
+closed_consultation      623
+redirect                   1
+Outcome pages with no datable response: 88
+Closed (no-outcome) pages whose history mentions a response after closing: 25
+                                                                                                                           title            lead_org                    closed
+0                                                     Google’s general search services: proposed user choice conduct requirement                 CMA 2026-10-09 16:00:00+00:00
+1                                                                Thames regional flood and coastal committee: composition change  Environment Agency 2026-09-13 22:59:00+00:00
+47                                                             Proposed steering conduct requirement for Apple’s mobile platform                 CMA 2026-07-28 22:59:00+00:00
+50                                                            Proposed steering conduct requirement for Google’s mobile platform                 CMA 2026-07-28 22:59:00+00:00
+179                                                               The Online Procedure (Core Rules and Pilot Schemes) Rules 2026                OPRC 2026-01-15 10:00:00+00:00
+244                                                             Digital justice system: inclusion framework and pre-action model                OPRC 2025-09-19 16:00:00+00:00
+272                                                      Urinary tract infection: diagnostic tools for primary care consultation               UKHSA 2024-06-02 22:59:00+00:00
+274                                                                  Consultation on criminal justice joint inspection programme             HMICFRS 2025-01-07 17:00:00+00:00
+280                                                                                       Refining the UK subsidy control regime                 DBT 2025-01-21 23:59:00+00:00
+371                                                                          Review of the Veterinary Medicines Regulations 2013                 VMD 2023-03-31 22:45:00+00:00
+389                                                                                       Coronial investigations of stillbirths                 MOJ 2019-06-18 23:00:00+00:00
+400                                                                                          Trade with Maldives: call for input                 DBT 2023-08-02 22:45:00+00:00
+417                                                          Domestic maritime decarbonisation: the course to net zero emissions                 DfT 2022-10-06 22:45:00+00:00
+423                                                                                                              Late night levy         Home Office 2023-04-03 23:15:00+00:00
+446  Consultation on The Merchant Shipping (Cargo and passenger ship construction and miscellaneous amendments) Regulations 2022                 MCA 2022-10-20 17:00:00+00:00
+Pages with a post-closing holding/delay note: 84
+  by doc_type: {'consultation_outcome': 69, 'closed_consultation': 15}
+  of which still unanswered: 18
+
+== by closing cohort
+                           closed  closed_12w_ago  response_within_12w  pct_within_12w  no_response_yet  pct_no_response  median_days_if_responded
+cohort                                                                                                                                            
+2019-21                    1226.0          1226.0                409.0            33.0            161.0             13.0                     113.0
+2022 to election           1161.0          1161.0                355.0            31.0            185.0             16.0                     115.0
+first year after election   367.0           367.0                107.0            29.0             72.0             20.0                     111.0
+since July 2025             590.0           486.0                119.0            24.0            177.0             36.0                     105.0
+
+== closed since 5 July 2024, by lead organisation (10+ consultations)
+                                         closed  closed_12w_ago  response_within_12w  pct_within_12w  no_response_yet  pct_no_response  median_days_if_responded
+lead_org                                                                                                                                                        
+MOJ                                        21.0            15.0                  0.0             0.0              9.0             60.0                     195.5
+BIST                                       26.0            19.0                  1.0             5.0              4.0             21.0                     123.5
+MHRA                                       16.0            15.0                  1.0             7.0              9.0             60.0                     140.5
+HMT                                        35.0            29.0                  3.0            10.0              4.0             14.0                     158.0
+MMO                                        32.0            30.0                  3.0            10.0             26.0             87.0                      51.5
+Defra                                      63.0            61.0                  7.0            11.0             26.0             43.0                     153.0
+MHCLG                                     103.0            95.0                 16.0            17.0             16.0             17.0                     117.0
+DHSC                                       37.0            36.0                  7.0            19.0             16.0             44.0                     112.5
+DfT                                        51.0            44.0                  9.0            20.0             18.0             41.0                     159.0
+Home Office                                30.0            25.0                  5.0            20.0              5.0             20.0                     158.5
+DWP                                        19.0            13.0                  3.0            23.0              2.0             15.0                     121.0
+DESNZ                                      94.0            87.0                 22.0            25.0             21.0             24.0                     133.0
+MCA                                        15.0            12.0                  3.0            25.0              1.0              8.0                     115.0
+ORR                                        12.0            11.0                  3.0            27.0              6.0             55.0                      67.0
+FSA                                        10.0             7.0                  2.0            29.0              3.0             43.0                     185.0
+DBT                                        28.0            28.0                  8.0            29.0              6.0             21.0                     113.5
+DSIT                                       10.0            10.0                  3.0            30.0              0.0              0.0                     155.0
+HMRC                                       49.0            44.0                 13.0            30.0             14.0             32.0                      89.0
+DfE                                        39.0            30.0                 10.0            33.0              7.0             23.0                     108.0
+Department for Culture, Media and Sport    13.0            10.0                  4.0            40.0              2.0             20.0                      63.0
+Environment Agency                         37.0            35.0                 17.0            49.0              5.0             14.0                      83.0
+CMA                                        60.0            55.0                 27.0            49.0              4.0              7.0                      71.0
+Ofqual                                     11.0            11.0                  6.0            55.0              1.0              9.0                      68.5
+Natural England                            46.0            45.0                 32.0            71.0             11.0             24.0                      40.5
+
+All since election: {'closed': 957.0, 'closed_12w_ago': 853.0, 'response_within_12w': 226.0, 'pct_within_12w': 26.0, 'no_response_yet': 249.0, 'pct_no_response': 29.0, 'median_days_if_responded': 107.0}
+
+== oldest unanswered since the election
+                                                                                                                                title             lead_org                    closed
+339                                                                                         Smarter regulation: employment law reform                  DBT 2024-07-11 22:59:00+00:00
+337                                                                    Proposal for a 'tie-in' to NHS dentistry for graduate dentists                 DHSC 2024-07-18 22:59:00+00:00
+336                                                 Modernising support for independent living: the health and disability green paper                  DWP 2024-07-22 22:59:00+00:00
+334                                                                                                    August 2024 Catch Limit Review                  MMO 2024-07-25 07:00:00+00:00
+1472  Review of Part 3, Article 29, and Part 1 of Schedule 4 of the Home Credit Market Investigation Order 2007: Provisional decision                  CMA 2024-08-02 16:00:00+00:00
+328                                                                                                 September 2024 Catch Limit Review                  MMO 2024-08-28 07:00:00+00:00
+327                                                                                                  Friction ridge detail comparison                  FSR 2024-09-13 16:00:00+00:00
+324                                                                                                 October 2024 – Catch Limit Review                  MMO 2024-09-26 08:00:00+00:00
+330                                                             New guidance for data ethics and data driven technologies in policing  College of Policing 2024-10-11 10:59:00+00:00
+320                Proposed amendments to FSAs for the examination and testing of human biological material and material distribution                  FSR 2024-10-11 22:59:00+00:00
+321                                                                        Section 5A drug-driving: revised FSA specific requirements                  FSR 2024-10-11 22:59:00+00:00
+322                                                                     Open access restriction at Twin Oaks Farm (3): how to comment      Natural England 2024-10-16 23:00:00+00:00
+
+== longest-outstanding overall (closed since 2019)
+                                                                                                                                                                                                     title                                 lead_org                    closed
+618                                                                                                                                                          Provisional police grant report: 2019 to 2020                              Home Office 2019-01-10 17:00:00+00:00
+3343                                                                                                                                                                  CMA Annual Plan consultation 2019/20                                      CMA 2019-01-13 23:45:00+00:00
+622                                                                                                                                                          Encouraging innovation in regulated utilities                                      DBT 2019-01-16 00:00:00+00:00
+3342                                                                                                                                         Proposed review of the Energy Market Investigation Order 2016                                      CMA 2019-01-18 17:00:00+00:00
+616                                                                                                                             Alternative Dispute Resolution requirements and draft licence modification                                      ORR 2019-01-22 23:45:00+00:00
+517                                                                                                                                                                Preventing and tackling forced marriage                              Home Office 2019-01-23 23:00:00+00:00
+621                                                                                                                                                                              Amendments to tax returns                                     HMRC 2019-02-06 23:45:00+00:00
+613   News Corp UK and Ireland Limited - Invitation to Comment on a request to accept undertakings in place of conditions relating to its acquisition of The Times and The Sunday Times newspapers in 1981  Department for Culture, Media and Sport 2019-02-11 17:00:00+00:00

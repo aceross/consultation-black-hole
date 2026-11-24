@@ -1,0 +1,61 @@
+Department consultations closed since 2019: 2185
+Closed 2019 to 2021: n=773; responded by 12w 27.0%, 26w 52.0%, 52w 72.0%, 104w 83.0%
+Closed 2022 to July 2024 election: n=779; responded by 12w 26.0%, 26w 52.0%, 52w 71.0%, 104w 82.0%
+Closed in the year after the election: n=200; responded by 12w 20.0%, 26w 54.0%, 52w 79.0%, 104w 86.0%
+Closed since July 2025: n=433; responded by 12w 20.0%, 26w 51.0%, 52w 80.0%, 104w None%
+
+== 3-cohort KM summary (matching Figure 1 and prose table)
+Closed 2019 to 2021: n=773 (at risk 104w=128); 12w 27.0% (26.5%), 26w 52.0% (52.4%), 52w 72.0% (72.3%), 104w 83.0% (83.4%)
+Closed 2022 to July 2024 election: n=779 (at risk 104w=144); 12w 26.0% (25.9%), 26w 52.0% (52.0%), 52w 71.0% (71.0%), 104w 82.0% (81.5%)
+Since the July 2024 election: n=633 (at risk 104w=5); 12w 20.0% (19.9%), 26w 52.0% (52.2%), 52w 79.0% (79.2%), 104w 87.0% (87.0%)
+
+Departments, closed since election and more than 12 weeks ago: 558; response within 12 weeks: 112 (20%); no response yet: 155 (28%)
+Of those, opened before the election: 24; no response yet: 3
+Of those, had a post-closing holding/delay note: 33; still unanswered: 13
+                closed  within_12w  no_response  median_days  delay_notes  pct_within_12w  pct_no_response
+dept                                                                                                      
+Cabinet Office       4           0            1         96.0            0             0.0             25.0
+MoD                  5           0            2         99.0            1             0.0             40.0
+MoJ                 15           0            9        195.5            0             0.0             60.0
+HM Treasury         29           3            4        158.0            0            10.0             14.0
+Defra               61           7           26        153.0           30            11.0             43.0
+MHCLG               95          16           16        117.0            0            17.0             17.0
+BIST/DBT            47           9           10        125.0            1            19.0             21.0
+DHSC                36           7           16        112.5            0            19.0             44.0
+DfT                 44           9           18        159.0            0            20.0             41.0
+Home Office         25           5            5        158.5            0            20.0             20.0
+DWP                 13           3            2        121.0            0            23.0             15.0
+DESNZ/BEIS          87          22           21        143.5            0            25.0             24.0
+DSIT                10           3            0        155.0            1            30.0              0.0
+HMRC                44          13           14         92.0            0            30.0             32.0
+DfE                 30          10            7        123.0            0            33.0             23.0
+NIO                  3           1            2         83.0            0            33.0             67.0
+DCMS                10           4            2         76.0            0            40.0             20.0
+
+== department consultations closed since the election with no response, oldest first
+                                                                                                                                 title         dept                    opened                    closed
+339                                                                                          Smarter regulation: employment law reform     BIST/DBT 2024-05-16 11:00:00+00:00 2024-07-11 22:59:00+00:00
+337                                                                     Proposal for a 'tie-in' to NHS dentistry for graduate dentists         DHSC 2024-05-23 10:00:00+00:00 2024-07-18 22:59:00+00:00
+336                                                  Modernising support for independent living: the health and disability green paper          DWP 2024-04-29 16:00:00+00:00 2024-07-22 22:59:00+00:00
+333                                                              Healthy Start eligibility for families who cannot access public funds         DHSC 2024-07-31 14:00:00+00:00 2024-10-23 22:59:00+00:00
+319                                                    UK Pollutant Release and Transfer Register: national implementation report 2025        Defra 2024-10-10 15:00:00+00:00 2024-12-05 23:59:00+00:00
+317                                                            Healthy Start for families with no recourse to public funds (easy read)         DHSC 2024-10-18 13:00:00+00:00 2024-12-13 23:59:00+00:00
+1362                                                               RVAR 2010 exemption: Chiltern Railways passenger information system          DfT 2024-12-03 09:30:00+00:00 2025-01-07 23:59:00+00:00
+315                   Draft regulations: The Cryptoasset Service Providers (Due Diligence and Reporting Requirements) Regulations 2025         HMRC 2024-10-30 14:30:00+00:00 2025-01-10 23:59:00+00:00
+314                                                   Draft regulations: The International Tax Compliance (Amendment) Regulations 2025         HMRC 2024-10-30 14:30:00+00:00 2025-01-10 23:59:00+00:00
+310                                                                                             Absent voting Legislative Reform Order        MHCLG 2024-11-25 00:00:00+00:00 2025-01-20 23:59:00+00:00
+309                                                             UK ETS scope expansion - CCS: non-pipeline transport of carbon dioxide   DESNZ/BEIS 2024-11-28 17:00:00+00:00 2025-01-23 23:59:00+00:00
+313                                                                                                   East West Rail consultation 2024          DfT 2024-11-14 00:01:00+00:00 2025-01-24 23:59:00+00:00
+295                                        Implementing the Carbon Offsetting and Reduction Scheme for International Aviation (CORSIA)          DfT 2024-12-16 10:00:00+00:00 2025-02-24 23:59:00+00:00
+305                                    Northern Ireland Office launches consultation on the use of non-jury trials in Northern Ireland          NIO 2024-12-09 00:00:00+00:00 2025-03-03 17:00:00+00:00
+302                                                                                        Raising product standards for space heating   DESNZ/BEIS 2024-12-17 12:00:00+00:00 2025-03-25 23:59:00+00:00
+293                                                                                                      Input into the steel strategy     BIST/DBT 2025-02-16 00:01:00+00:00 2025-03-30 22:59:00+00:00
+297                        Funding mechanism for the Hydrogen Production Business Model: proposed design of the Gas Shipper Obligation   DESNZ/BEIS 2025-01-16 13:00:00+00:00 2025-04-09 22:59:00+00:00
+282                                                            Stamp Duty and Stamp Duty Reserve Tax exemption for PISCES transactions         HMRC 2025-03-26 09:30:00+00:00 2025-04-23 22:59:00+00:00
+287                                            Exemption under RoHS regulations for use of helium cadmium lasers in Raman spectroscopy        Defra 2025-03-10 09:00:00+00:00 2025-05-04 22:59:00+00:00
+286                                                Exemption under RoHS regulations for lead solder in combustion engine control units        Defra 2025-03-10 09:00:00+00:00 2025-05-04 22:59:00+00:00
+289                                               Exemption under RoHS regulations for mercury in discharge lamps for special purposes        Defra 2025-03-10 09:00:00+00:00 2025-05-04 22:59:00+00:00
+288   Exemption under RoHS regulations for use of lead in bearings and bushes of diesel or gaseous fuelled internal combustion engines        Defra 2025-03-10 09:00:00+00:00 2025-05-04 22:59:00+00:00
+290                                                     Oversight and regulation of private prosecutors in the criminal justice system          MoJ 2025-03-06 09:00:00+00:00 2025-05-08 23:00:00+00:00
+281                                                                      Alternative Investment Fund Managers Regulations consultation  HM Treasury 2025-04-07 08:00:00+00:00 2025-06-09 22:59:00+00:00
+278                               Proposals for greenhouse gas removal and power bioenergy with carbon capture and storage regulations   DESNZ/BEIS 2025-04-28 09:00:00+00:00 2025-06-09 22:59:00+00:00
