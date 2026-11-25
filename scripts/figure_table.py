@@ -44,7 +44,7 @@ def main(src, out):
     top = 0.715
     step = 0.0408
     bar_x0, bar_w = 0.270, 0.275
-    gap = 0.0022
+    seg_gap = 0.0024
 
     # Inline 3-swatch key above column headers
     key_y = 0.818
@@ -52,7 +52,7 @@ def main(src, out):
     swatches = [
         (0.270, PAL["accent"], "none", 0.0, "Answered within 12w"),
         (0.515, PAL["context"], "none", 0.0, "Answered later"),
-        (0.705, PAL["faint"], PAL["context"], 0.6, "No recorded response"),
+        (0.705, PAL["faint"], PAL["context"], 0.65, "No recorded response"),
     ]
     for sx, fc, ec, lw, label in swatches:
         fig.add_artist(Rectangle((sx, key_y - sw_h / 2), sw_w, sw_h, facecolor=fc, edgecolor=ec, lw=lw, zorder=2))
@@ -65,12 +65,14 @@ def main(src, out):
     fig.text(0.665, top + 0.028, "Within\n12 weeks", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
     fig.text(0.825, top + 0.028, "No recorded\nresponse", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
     fig.text(0.965, top + 0.028, "Median\ndays*", fontsize=BASE_PT * 0.84, color=PAL["muted"], weight="bold", ha="right", va="bottom")
-    fig.add_artist(Line2D([0.035, 0.965], [top + 0.020] * 2, color=PAL["ink"], lw=0.6))
+    fig.add_artist(Line2D([0.035, 0.965], [top + 0.020] * 2, color=PAL["ink"], lw=0.65))
 
-    # Vertical dashed 20% average reference line across the stacked bars
+    # Vertical dashed 20% average line behind bars with solid anchor ticks at top and bottom
     avg_x = bar_x0 + (overall_pct / 100.0) * bar_w
     y_bot = top - (len(d) - 0.5) * step
-    fig.add_artist(Line2D([avg_x, avg_x], [y_bot, top + 0.020], color=PAL["ink"], lw=0.7, ls=(0, (2, 2)), zorder=4))
+    fig.add_artist(Line2D([avg_x, avg_x], [y_bot, top + 0.020], color=PAL["ink"], lw=0.75, ls=(0, (2, 2)), zorder=1))
+    fig.add_artist(Line2D([avg_x, avg_x], [top + 0.020, top + 0.026], color=PAL["ink"], lw=0.8, zorder=3))
+    fig.add_artist(Line2D([avg_x, avg_x], [y_bot - 0.006, y_bot], color=PAL["ink"], lw=0.8, zorder=3))
     fig.text(avg_x, y_bot - 0.011, f"Avg within 12w: {overall_pct}%", fontsize=BASE_PT * 0.78, color=PAL["muted"], ha="center", va="top")
 
     bar_h = step * 0.54
@@ -88,17 +90,16 @@ def main(src, out):
         fig.text(0.035, y, name, fontsize=BASE_PT * 0.89, va="center", color=PAL["ink"])
         fig.text(0.248, y, f"{closed}", fontsize=BASE_PT * 0.89, va="center", ha="right", color=PAL["muted"])
 
-        fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bar_w, bar_h, facecolor=PAL["faint"], edgecolor="none", zorder=0))
-        bw1 = (w12 / closed) * bar_w
-        bw2 = (later / closed) * bar_w
-        if bw1 > 0:
-            fig.add_artist(Rectangle((bar_x0, y - bar_h / 2), bw1, bar_h, facecolor=PAL["accent"], edgecolor="none", zorder=2))
-        if bw2 > 0:
-            fig.add_artist(Rectangle((bar_x0 + bw1, y - bar_h / 2), bw2, bar_h, facecolor=PAL["context"], edgecolor="none", zorder=2))
-        if w12 > 0 and later > 0:
-            fig.add_artist(Rectangle((bar_x0 + bw1 - gap / 2, y - bar_h / 2), gap, bar_h, facecolor=PAL["paper"], edgecolor="none", zorder=3))
-        if (w12 + later) > 0 and nr > 0:
-            fig.add_artist(Rectangle((bar_x0 + bw1 + bw2 - gap / 2, y - bar_h / 2), gap, bar_h, facecolor=PAL["paper"], edgecolor="none", zorder=3))
+        # Draw each non-zero segment directly with true alpha=0 transparent interior gaps
+        segs = [(cnt, col) for cnt, col in [(w12, PAL["accent"]), (later, PAL["context"]), (nr, PAL["faint"])] if cnt > 0]
+        cur_x = bar_x0
+        for j, (cnt, col) in enumerate(segs):
+            raw_w = (cnt / closed) * bar_w
+            left_trim = seg_gap / 2 if j > 0 else 0.0
+            right_trim = seg_gap / 2 if j < len(segs) - 1 else 0.0
+            draw_w = max(raw_w - left_trim - right_trim, 0.001)
+            fig.add_artist(Rectangle((cur_x + left_trim, y - bar_h / 2), draw_w, bar_h, facecolor=col, edgecolor="none", zorder=2))
+            cur_x += raw_w
 
         fig.text(0.665, y, f"{pct_w12}% ({w12})", fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["ink"])
         fig.text(0.825, y, f"{nr} ({pct_nr}%)", fontsize=BASE_PT * 0.87, va="center", ha="right", color=PAL["muted"])

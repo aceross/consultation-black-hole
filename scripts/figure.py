@@ -17,9 +17,9 @@ from departments import DEPARTMENTS, SNAPSHOT, km_cumulative  # noqa: E402
 from plot_setup import BASE_PT, PAL, figure, save, title_block  # noqa: E402
 
 COHORTS = [
-    ("2019-01-01", "2022-01-01", "2019 to 2021", PAL["context"], (0, (4, 2)), 1.6),
-    ("2022-01-01", "2024-07-05", "2022 to July 2024", PAL["muted"], "-", 1.6),
-    ("2024-07-05", "2026-11-24", "Since the July 2024 election", PAL["accent"], "-", 2.3),
+    ("2019-01-01", "2022-01-01", "2019 to 2021", PAL["context"], (0, (4, 2)), 1.65),
+    ("2022-01-01", "2024-07-05", "2022 to July 2024", PAL["ink"], "-", 1.65),
+    ("2024-07-05", "2026-11-24", "Since the July 2024 election", PAL["accent"], "-", 2.35),
 ]
 
 
@@ -38,7 +38,7 @@ def main(src, out):
         cum = 100 * km_cumulative(g["t"].values, g["event"].values if "event" in g else g["responded"].values, weeks * 7)
         if start == "2024-07-05":
             ax.step(weeks[:83], cum[:83], where="post", color=colour, ls=ls, lw=lw)
-            ax.step(weeks[82:], cum[82:], where="post", color=colour, ls=(0, (1.5, 2)), lw=2.0)
+            ax.step(weeks[82:], cum[82:], where="post", color=colour, ls=(0, (1.5, 2)), lw=2.05)
         else:
             ax.step(weeks, cum, where="post", color=colour, ls=ls, lw=lw)
         last = np.nanmax(np.where(~np.isnan(cum))[0])
@@ -50,8 +50,8 @@ def main(src, out):
         ax.plot([62, 68], [y, y], color=colour, ls=ls, lw=lw)
         ax.text(70, y, text, va="center", fontsize=BASE_PT * 0.85,
                 color=colour if colour == PAL["accent"] else PAL["ink"])
-    ax.axvline(12, color=PAL["ink"], lw=0.7, ls=(0, (2, 2)))
-    ax.text(13, 96, "12-week target", fontsize=BASE_PT * 0.85, va="top")
+    ax.axvline(12, color=PAL["ink"], lw=0.75, ls=(0, (2, 2)))
+    ax.text(13, 96, "12-week target", fontsize=BASE_PT * 0.85, va="top", color=PAL["ink"])
     ax.set_xlim(0, 104)
     ax.set_ylim(0, 100)
     ax.set_xticks([0, 12, 26, 52, 78, 104], ["0", "12", "26", "52", "78", "104 weeks"])
